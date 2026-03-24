@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module Schedule 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8; --ink: #1a1a2e; --rule: #c8bfaa;
+    --you: #2d6a4f; --you-bg: #d8f3dc;
+    --sa: #1d4e89; --sa-bg: #dbeafe;
+    --sa-opp: #0e6655; --sa-opp-bg: #c2ede5;
+    --travel: #7b4f12; --travel-bg: #fef3c7;
+    --room: #6b2d6b; --room-bg: #f3e8f3;
+    --holiday: #8b0000; --holiday-bg: #fee2e2;
+    --fieldwork: #1a5276; --fieldwork-bg: #d6eaf8;
+    --slovakia: #5b21b6; --slovakia-bg: #ede9fe;
+    --empty: #888; --empty-bg: #eeebe4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Mono', monospace; padding: 2rem; min-height: 100vh; }
+
+  header { margin-bottom: 1.5rem; border-bottom: 2px solid var(--ink); padding-bottom: 1rem; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 2rem; letter-spacing: -0.02em; }
+  h1 span { font-style: italic; font-weight: 300; }
+  .subtitle { font-size: 0.72rem; color: var(--empty); margin-top: 0.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* Page-level tabs */
+  .page-tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--ink); }
+  .page-tab { font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; padding: 0.5rem 1.4rem 0.4rem; border: none; background: transparent; color: var(--empty); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+  .page-tab:hover { color: var(--ink); }
+  .page-tab.active { color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .page-section { display: none; }
+  .page-section.visible { display: block; }
+
+  /* Plan tabs */
+  .tabs { display: flex; gap: 0.25rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tab { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.4rem 0.9rem; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; transition: all 0.15s; }
+  .tab:hover { background: var(--rule); }
+  .tab.active { background: var(--ink); color: var(--bg); }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.68rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; }
+  .ldot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Stats */
+  .stats { display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; margin-bottom: 1.8rem; padding: 0.8rem 1.1rem; background: white; border: 1.5px solid var(--rule); }
+  .stat-item strong { font-size: 1.2rem; font-family: 'Fraunces', serif; display: block; line-height: 1; margin-bottom: 0.15rem; }
+  .stat-label { color: var(--empty); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.6rem; }
+
+  /* Schedule table */
+  .schedule { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+  .schedule th { text-align: left; padding: 0.45rem 0.65rem; border-bottom: 2px solid var(--ink); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bg); position: sticky; top: 0; white-space: nowrap; }
+  .schedule td { padding: 0.3rem 0.65rem; vertical-align: middle; }
+  .r-month td { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.88rem; padding-top: 1.2rem; padding-bottom: 0.35rem; color: var(--empty); border-bottom: 1px solid var(--rule); }
+  .r-single td { border-bottom: 1px solid var(--rule); }
+  .r-a   td { border-bottom: none; padding-bottom: 0.1rem; padding-top: 0.55rem; }
+  .r-brk td { border-bottom: none; padding-top: 0; padding-bottom: 0; font-size: 0.58rem; color: var(--empty); font-style: italic; opacity: 0.6; }
+  .r-b   td { border-bottom: 1.5px solid var(--rule); padding-top: 0.1rem; padding-bottom: 0.5rem; }
+  .opp td { background: #eaf9f5 !important; }
+  .opp.r-a   td:first-child { border-left: 3px solid var(--sa-opp); }
+  .opp.r-brk td:first-child { border-left: 3px solid var(--sa-opp); }
+  .opp.r-b   td:first-child { border-left: 3px solid var(--sa-opp); }
+  .sa-hand td { background: #eff6ff !important; }
+  .sa-hand.r-a   td:first-child { border-left: 3px solid var(--sa); }
+  .sa-hand.r-brk td:first-child { border-left: 3px solid var(--sa); }
+  .sa-hand.r-b   td:first-child { border-left: 3px solid var(--sa); }
+  .r-fw   td { background: var(--fieldwork-bg) !important; border-bottom: 1px solid #b3d4ea; }
+  .r-sk   td { background: var(--slovakia-bg)  !important; border-bottom: 1px solid #c4b5fd; }
+  .r-post td { opacity: 0.5; border-bottom: 1px solid var(--rule); }
+
+  /* Pills */
+  .pill { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 2px; font-size: 0.63rem; font-weight: 500; letter-spacing: 0.02em; white-space: nowrap; }
+  .p-you      { background: var(--you-bg);      color: var(--you); }
+  .p-sa       { background: var(--sa-bg);        color: var(--sa); }
+  .p-sa-opp   { background: var(--sa-opp-bg);    color: var(--sa-opp); }
+  .p-travel   { background: var(--travel-bg);    color: var(--travel); }
+  .p-holiday  { background: var(--holiday-bg);   color: var(--holiday); }
+  .p-room     { background: var(--room-bg);      color: var(--room); }
+  .p-fw       { background: var(--fieldwork-bg); color: var(--fieldwork); }
+  .p-slovakia { background: var(--slovakia-bg);  color: var(--slovakia); }
+  .p-empty    { background: var(--empty-bg);     color: var(--empty); }
+  .p-both     { background: #c8f0d8; color: #1a6b3c; }
+  .p-col-only { background: #eddff7; color: #5c2a7a; }
+  .p-you-only { background: var(--empty-bg); color: var(--empty); }
+  .p-neither  { background: #f0ede6; color: #aaa; }
+
+  .sid  { color: var(--empty); font-size: 0.62rem; }
+  .tlbl { color: var(--empty); font-size: 0.62rem; font-style: italic; }
+  .nt   { color: var(--empty); font-size: 0.62rem; font-style: italic; }
+  .tc   { text-align: right; color: var(--empty); font-size: 0.62rem; white-space: nowrap; }
+  .tc.hit { color: var(--you); font-weight: 500; }
+
+  /* Workshop tab */
+  .ws-table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+  .ws-table th { text-align: left; padding: 0.45rem 0.65rem; border-bottom: 2px solid var(--ink); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bg); position: sticky; top: 0; white-space: nowrap; }
+  .ws-table td { padding: 0.35rem 0.65rem; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+  .ws-table tr:hover td { background: rgba(0,0,0,0.02); }
+  .ws-month td { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.88rem; padding-top: 1.2rem; padding-bottom: 0.35rem; color: var(--empty); border-bottom: 1px solid var(--rule); }
+  .ws-both     td { background: #d4f5e2 !important; }
+  .ws-both     td:first-child { border-left: 3px solid #1a6b3c; }
+  .ws-col-only td { background: #eddff7 !important; }
+  .ws-you-only td { background: var(--empty-bg) !important; opacity: 0.7; }
+  .ws-neither  td { background: #f0ede6 !important; opacity: 0.45; }
+  .ws-summary  { font-size: 0.68rem; color: var(--empty); margin-bottom: 1.5rem; font-style: italic; }
+
+  /* Timeline bar */
+  .tl-wrap { margin-bottom: 1.8rem; }
+  .tl-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--empty); margin-bottom: 0.5rem; }
+  .tl-outer { position: relative; width: 100%; }
+  .tl-track { position: relative; height: 10px; background: #e8e3d8; border-radius: 3px; margin-bottom: 2px; overflow: visible; }
+  .tl-track.tl-short { height: 7px; opacity: 0.55; }
+  .tl-bar { position: absolute; top: 0; height: 100%; border-radius: 2px; }
+  .tl-label-row { position: relative; height: 16px; margin-bottom: 6px; }
+  .tl-month-label { position: absolute; font-size: 0.58rem; color: var(--empty); transform: translateX(-50%); white-space: nowrap; }
+  .tl-tick { position: absolute; top: 0; width: 1px; height: 6px; background: var(--rule); }
+  .tl-marker { position: absolute; top: -3px; width: 2px; border-radius: 1px; }
+  .tl-marker-label { position: absolute; font-size: 0.55rem; white-space: nowrap; transform: translateX(-50%); }
+  .tl-rows { display: flex; flex-direction: column; gap: 2px; }
+  .tl-row { display: flex; align-items: center; gap: 0.5rem; }
+  .tl-row-label { font-size: 0.58rem; color: var(--empty); width: 96px; flex-shrink: 0; text-align: right; white-space: nowrap; line-height: 1.3; }
+  .tl-axis { position: relative; flex: 1; }
+  .tl-legend-row { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; margin-top: 0.6rem; font-size: 0.6rem; color: var(--empty); }
+  .tl-legend-item { display: flex; align-items: center; gap: 0.3rem; }
+  .tl-legend-dot { width: 10px; height: 6px; border-radius: 1px; flex-shrink: 0; }
+
+  /* Travel calendar */
+  .twc-wrap { max-width: 900px; }
+  .twc-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin-bottom: 2rem; font-size: 0.72rem; }
+  .twc-legend-item { display: flex; align-items: center; gap: 0.45rem; }
+  .twc-legend-swatch { width: 28px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .twc-month-label { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.1rem; color: var(--empty); padding: 1.4rem 0 0.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 0.3rem; }
+  .twc-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--rule); min-height: 44px; }
+  .twc-row:hover { background: rgba(0,0,0,0.02); }
+  .twc-row.twc-weekend { background: #f9f6f0; }
+  .twc-row.twc-weekend:hover { background: #f2ede3; }
+  .twc-date { width: 110px; flex-shrink: 0; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.8rem 0.5rem 0; }
+  .twc-daynum { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 600; line-height: 1; color: var(--ink); min-width: 28px; text-align: right; }
+  .twc-daynum.twc-weekend-num { color: var(--rule); }
+  .twc-dayname { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--empty); }
+  .twc-bars { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 6px 0; }
+  .twc-bar-row { display: flex; align-items: center; gap: 6px; height: 14px; }
+  .twc-bar-label { width: 72px; flex-shrink: 0; font-size: 0.6rem; color: var(--empty); text-align: right; white-space: nowrap; }
+  .twc-bar-track { flex: 1; height: 100%; border-radius: 2px; position: relative; display: flex; align-items: center; }
+  .twc-bar-fill { height: 100%; border-radius: 2px; }
+  .twc-markers { width: 260px; flex-shrink: 0; display: flex; align-items: center; padding-left: 1rem; gap: 0.4rem; flex-wrap: wrap; }
+  .twc-tag { display: inline-block; padding: 0.1rem 0.45rem; border-radius: 2px; font-size: 0.6rem; font-weight: 500; white-space: nowrap; }
+  .twc-tag-teach  { background: var(--you-bg);      color: var(--you); }
+  .twc-tag-sa     { background: var(--sa-opp-bg);   color: var(--sa-opp); }
+  .twc-tag-fw     { background: var(--fieldwork-bg);color: var(--fieldwork); }
+  .twc-tag-slovakia { background: var(--slovakia-bg); color: var(--slovakia); }
+  .twc-tag-skip   { background: var(--empty-bg);    color: var(--empty); }
+  .twc-tag-holiday{ background: var(--holiday-bg);  color: var(--holiday); }
+  .twc-tag-exam   { background: #f3e8ff;            color: #7e22ce; }
+  .twc-tag-session{ background: #fff7ed;            color: #9a3412; font-style: italic; font-size: 0.58rem; }
+
+  /* ── Travel Calendar tab ── */
+  :root {
+    --tc-a-short: #fed7aa; --tc-a-short-ink: #c2410c;
+    --tc-a-long:  #fdba74; --tc-a-long-ink:  #9a3412;
+    --tc-b-short: #fef08a; --tc-b-short-ink: #854d0e;
+    --tc-b-long:  #fde047; --tc-b-long-ink:  #713f12;
+    --tc-c-short: #bbf7d0; --tc-c-short-ink: #166534;
+    --tc-c-long:  #86efac; --tc-c-long-ink:  #14532d;
+    --tc-weekend: #f0ede6;
+  }
+  .tc-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; margin-bottom: 2rem; font-size: 0.68rem; }
+  .tc-legend-group { display: flex; flex-direction: column; gap: 0.3rem; }
+  .tc-legend-group-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--empty); margin-bottom: 0.1rem; }
+  .tc-legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .tc-lswatch { width: 28px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  .tc-lswatch.tc-constraint { border: 1.5px solid #aaa; }
+  .tc-cal-wrap { overflow-x: auto; }
+  .tc-table { border-collapse: collapse; min-width: 600px; width: 100%; font-size: 0.68rem; }
+  .tc-table thead tr.tc-r-labels th { padding: 0.5rem 0.4rem 0.2rem; text-align: center; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.04em; border-bottom: none; white-space: nowrap; }
+  .tc-table thead tr.tc-r-dates th { padding: 0.1rem 0.4rem 0.5rem; text-align: center; font-size: 0.58rem; font-style: italic; color: var(--empty); border-bottom: 2px solid var(--ink); white-space: nowrap; }
+  .tc-table th.tc-col-date { text-align: left; }
+  .tc-table th.tc-h-a-short { background: var(--tc-a-short); color: var(--tc-a-short-ink); }
+  .tc-table th.tc-h-a-long  { background: var(--tc-a-long);  color: var(--tc-a-long-ink);  }
+  .tc-table th.tc-h-b-short { background: var(--tc-b-short); color: var(--tc-b-short-ink); }
+  .tc-table th.tc-h-b-long  { background: var(--tc-b-long);  color: var(--tc-b-long-ink);  }
+  .tc-table th.tc-h-c-short { background: var(--tc-c-short); color: var(--tc-c-short-ink); }
+  .tc-table th.tc-h-c-long  { background: var(--tc-c-long);  color: var(--tc-c-long-ink);  }
+  .tc-table tbody td { padding: 0.28rem 0.4rem; text-align: center; border-bottom: 1px solid var(--rule); height: 32px; vertical-align: middle; }
+  .tc-table tbody td.tc-col-date { text-align: left; white-space: nowrap; padding-left: 0; min-width: 90px; }
+  .tc-date-num { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; line-height: 1; display: inline-block; min-width: 22px; text-align: right; margin-right: 4px; }
+  .tc-date-day { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--empty); }
+  .tc-table tr.tc-weekend td { background: var(--tc-weekend); }
+  .tc-table tr.tc-weekend .tc-date-num, .tc-table tr.tc-weekend .tc-date-day { color: #bbb; }
+  .tc-table tr.tc-month-sep td { background: var(--ink) !important; color: white; font-family: 'Fraunces', serif; font-style: italic; font-size: 0.9rem; text-align: left; padding: 0.5rem 0.5rem; border-bottom: none; }
+  .tc-table td.tc-away-a-short { background: var(--tc-a-short) !important; color: var(--tc-a-short-ink); font-size: 0.9rem; }
+  .tc-table td.tc-away-a-long  { background: var(--tc-a-long)  !important; color: var(--tc-a-long-ink);  font-size: 0.9rem; }
+  .tc-table td.tc-away-b-short { background: var(--tc-b-short) !important; color: var(--tc-b-short-ink); font-size: 0.9rem; }
+  .tc-table td.tc-away-b-long  { background: var(--tc-b-long)  !important; color: var(--tc-b-long-ink);  font-size: 0.9rem; }
+  .tc-table td.tc-away-c-short { background: var(--tc-c-short) !important; color: var(--tc-c-short-ink); font-size: 0.9rem; }
+  .tc-table td.tc-away-c-long  { background: var(--tc-c-long)  !important; color: var(--tc-c-long-ink);  font-size: 0.9rem; }
+  .tc-table tr.tc-constraint-row td.tc-col-date { background: #f3f0ff; }
+  .tc-table tr.tc-constraint-row td.tc-constraint-label { background: #f3f0ff; }
+  .tc-table tr.tc-constraint-row .tc-date-num, .tc-table tr.tc-constraint-row .tc-date-day { color: #6d28d9; }
+  .tc-table tr.tc-constraint-row td.tc-col-date { font-weight: 500; }
+  .tc-table tr.tc-holiday-row .tc-date-num, .tc-table tr.tc-holiday-row .tc-date-day { color: #b91c1c; }
+  .tc-constraint-label { font-size: 0.62rem; font-style: italic; text-align: left; padding-left: 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+  .tc-table tr.tc-constraint-row .tc-constraint-label { color: #6d28d9; background: #f3f0ff; }
+  .tc-table tr.tc-holiday-row .tc-constraint-label { color: #b91c1c; }
+  .tw-cell { width: 22px !important; padding: 0 3px !important; vertical-align: middle !important; }
+  .tw-pip  { width: 12px; height: 4px; border-radius: 1px; margin: 1px auto; }
+  .tw-gap  { width: 12px; height: 4px; margin: 1px auto; }
+  .cp-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.68rem; }
+  .cp-table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+  .cp-table th { text-align: left; padding: 0.45rem 0.65rem; border-bottom: 2px solid var(--ink); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bg); position: sticky; top: 0; white-space: nowrap; }
+  .cp-table td { padding: 0.4rem 0.65rem; border-bottom: 1px solid var(--rule); vertical-align: top; font-size: 0.7rem; }
+  .cp-month td { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.88rem; padding-top: 1.2rem; padding-bottom: 0.35rem; color: var(--empty); border-bottom: 1px solid var(--rule); }
+  .cp-you      td { background: #f0faf2 !important; }
+  .cp-you      td:first-child { border-left: 3px solid var(--you); }
+  .cp-sa-opp   td { background: #eaf9f5 !important; }
+  .cp-sa-opp   td:first-child { border-left: 3px solid var(--sa-opp); }
+  .cp-sa       td { background: #eff6ff !important; }
+  .cp-sa       td:first-child { border-left: 3px solid var(--sa); }
+  .cp-fw       td { background: var(--fieldwork-bg) !important; }
+  .cp-fw       td:first-child { border-left: 3px solid var(--fieldwork); }
+  .cp-slovakia td { background: var(--slovakia-bg) !important; }
+  .cp-slovakia td:first-child { border-left: 3px solid var(--slovakia); }
+  .cp-skip     td { background: var(--empty-bg) !important; opacity: 0.5; }
+  .cp-content-block { margin-bottom: 0.4rem; line-height: 1.5; }
+  .cp-activity { display: inline-block; background: #fce7f3; color: #9d174d; padding: 0.1rem 0.4rem; border-radius: 2px; font-size: 0.6rem; margin-right: 0.3rem; white-space: nowrap; }
+  .cp-reading  { display: inline-block; background: #fef9c3; color: #ca8a04; padding: 0.1rem 0.4rem; border-radius: 2px; font-size: 0.6rem; margin-right: 0.3rem; white-space: nowrap; }
+  .cp-mins     { color: var(--empty); font-size: 0.6rem; font-style: italic; white-space: nowrap; }
+  .cp-sa-note  { font-size: 0.62rem; color: var(--sa); font-style: italic; }
+  .cp-note     { font-size: 0.62rem; color: var(--empty); font-style: italic; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Module Schedule <span>Spring 2026</span></h1>
+  <p class="subtitle">Wed &amp; Thu · 10:15–11:45 &amp; 12:15–13:45 · Fieldwork 1–5 June</p>
+</header>
+
+<div class="page-tabs">
+  <button class="page-tab active" onclick="showPage('schedule')">Teaching Schedule</button>
+  <button class="page-tab" onclick="showPage('content')">Content Plan</button>
+  <button class="page-tab" onclick="showPage('workshop')">Workshop Availability</button>
+  <button class="page-tab" onclick="showPage('windows')">Travel Windows</button>
+  <button class="page-tab" onclick="showPage('trcal')">Travel Calendar</button>
+</div>
+
+<!-- ══ TEACHING SCHEDULE ══ -->
+<div class="page-section visible" id="page-schedule">
+
+  <div class="legend">
+    <div class="legend-item"><div class="ldot" style="background:var(--you-bg);border:1.5px solid var(--you)"></div>You</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--sa-opp-bg);border:1.5px solid var(--sa-opp)"></div>SA covers — you away</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--sa-bg);border:1.5px solid var(--sa)"></div>SA covers — planned handover</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--travel-bg);border:1.5px solid var(--travel)"></div>Away — SA unavailable</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--holiday-bg);border:1.5px solid var(--holiday)"></div>National Holiday</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--room-bg);border:1.5px solid var(--room)"></div>No Room Available</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--fieldwork-bg);border:1.5px solid var(--fieldwork)"></div>Fieldwork Week</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--slovakia-bg);border:1.5px solid var(--slovakia)"></div>Slovakia Fieldtrip (provisional)</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--empty-bg);border:1.5px solid var(--empty)"></div>Skipped / Not teaching</div>
+  </div>
+
+  <div class="tabs" id="sch-plan-tabs">
+    <button class="tab active" onclick="showPlan('A')">Option A · 10–19 Apr</button>
+    <button class="tab" onclick="showPlan('B')">Option B · 24 Apr–3 May</button>
+    <button class="tab" onclick="showPlan('C')">Option C · 8–17 May</button>
+    <button class="tab" onclick="showPlan('X')">All travel dates removed</button>
+    <button class="tab" onclick="showPlan('W')">Worst case — all travel dates</button>
+  </div>
+
+  <div class="tl-wrap" id="tl-schedule"></div>
+
+  <div class="stats" id="stats"></div>
+
+  <table class="schedule">
+    <thead>
+      <tr>
+        <th style="width:108px">Date</th>
+        <th style="width:48px">Day</th>
+        <th style="width:152px">Status</th>
+        <th style="width:22px;padding:0 3px;" title="Travel windows: orange=A, yellow=B, green=C · top pip=long, bottom pip=short"><span style="display:flex;flex-direction:column;gap:1px;align-items:center;padding:2px 0"><span style="width:8px;height:3px;background:#f97316;border-radius:1px;display:block"></span><span style="width:8px;height:3px;background:#eab308;border-radius:1px;display:block"></span><span style="width:8px;height:3px;background:#22c55e;border-radius:1px;display:block"></span></span></th>
+        <th style="width:130px">Session</th>
+        <th style="width:102px">Time</th>
+        <th>Notes</th>
+        <th class="tc" style="width:62px">Hrs</th>
+        <th class="tc" style="width:62px">SWS</th>
+      </tr>
+    </thead>
+    <tbody id="sb"></tbody>
+  </table>
+
+</div><!-- end page-schedule -->
+
+<!-- ══ CONTENT PLAN ══ -->
+<div class="page-section" id="page-content">
+
+  <div class="tabs" id="cp-plan-tabs">
+    <button class="tab active" onclick="showContent('A')">Option A · 10–19 Apr</button>
+    <button class="tab" onclick="showContent('B')">Option B · 24 Apr–3 May</button>
+    <button class="tab" onclick="showContent('C')">Option C · 8–17 May</button>
+    <button class="tab" onclick="showContent('X')">No travel</button>
+    <button class="tab" onclick="showContent('W')">Worst case — all dates</button>
+  </div>
+
+  <div class="tl-wrap" id="tl-content"></div>
+
+  <div class="cp-legend">
+    <div class="legend-item"><div class="ldot" style="background:var(--you-bg);border:1.5px solid var(--you)"></div>You teaching</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--sa-opp-bg);border:1.5px solid var(--sa-opp)"></div>SA covers — you away</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--sa-bg);border:1.5px solid var(--sa)"></div>SA co-teaching / leading</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--fieldwork-bg);border:1.5px solid var(--fieldwork)"></div>Fieldwork</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--slovakia-bg);border:1.5px solid var(--slovakia)"></div>Slovakia fieldtrip (provisional)</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--empty-bg);border:1.5px solid var(--empty)"></div>Skipped / not teaching</div>
+    <div class="legend-item"><div class="ldot" style="background:#fef9c3;border:1.5px solid #ca8a04"></div>Reading / discussion</div>
+    <div class="legend-item"><div class="ldot" style="background:#fce7f3;border:1.5px solid #9d174d"></div>Workshop / activity</div>
+  </div>
+
+  <table class="cp-table" id="cp-table">
+    <thead>
+      <tr>
+        <th style="width:108px">Date</th>
+        <th style="width:48px">Day</th>
+        <th style="width:90px">Session</th>
+        <th style="width:220px">Topic</th>
+        <th style="width:90px">Status</th>
+        <th style="width:22px;padding:0 3px;" title="Travel windows: orange=A, yellow=B, green=C · top pip=long, bottom pip=short"><span style="display:flex;flex-direction:column;gap:1px;align-items:center;padding:2px 0"><span style="width:8px;height:3px;background:#f97316;border-radius:1px;display:block"></span><span style="width:8px;height:3px;background:#eab308;border-radius:1px;display:block"></span><span style="width:8px;height:3px;background:#22c55e;border-radius:1px;display:block"></span></span></th>
+        <th style="width:280px">Content &amp; Activities</th>
+        <th style="width:80px">SA Role</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="cp-body"></tbody>
+  </table>
+
+</div><!-- end page-content -->
+
+<!-- ══ WORKSHOP AVAILABILITY ══ -->
+<div class="page-section" id="page-workshop">
+
+  <div class="legend">
+    <div class="legend-item"><div class="ldot" style="background:#d4f5e2;border:1.5px solid #1a6b3c"></div>Both available — workshop opportunity</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--slovakia-bg);border:1.5px solid var(--slovakia)"></div>Slovakia fieldtrip — this IS the workshop</div>
+    <div class="legend-item"><div class="ldot" style="background:#eddff7;border:1.5px solid #5c2a7a"></div>Colleague available — you busy</div>
+    <div class="legend-item"><div class="ldot" style="background:var(--empty-bg);border:1.5px solid var(--empty)"></div>You free — colleague away</div>
+    <div class="legend-item"><div class="ldot" style="background:#f0ede6;border:1.5px solid #ccc"></div>Neither available</div>
+  </div>
+
+  <div class="tabs" id="ws-plan-tabs">
+    <button class="tab active" onclick="showWorkshop('A-short')">A short · 10–17 Apr</button>
+    <button class="tab" onclick="showWorkshop('A-long')">A long · 10–19 Apr</button>
+    <button class="tab" onclick="showWorkshop('B-short')">B short · 24 Apr–1 May</button>
+    <button class="tab" onclick="showWorkshop('B-long')">B long · 24 Apr–3 May</button>
+    <button class="tab" onclick="showWorkshop('C-short')">C short · 8–15 May</button>
+    <button class="tab" onclick="showWorkshop('C-long')">C long · 8–17 May</button>
+    <button class="tab" onclick="showWorkshop('X')">No travel</button>
+    <button class="tab" onclick="showWorkshop('W-short')">Worst case short</button>
+    <button class="tab" onclick="showWorkshop('W')">Worst case long</button>
+  </div>
+
+  <div class="tl-wrap" id="tl-workshop"></div>
+
+  <div class="ws-summary" id="ws-summary"></div>
+
+  <table class="ws-table">
+    <thead>
+      <tr>
+        <th style="width:108px">Date</th>
+        <th style="width:48px">Day</th>
+        <th style="width:175px">Status</th>
+        <th style="width:22px;padding:0 3px;" title="Travel windows: orange=A, yellow=B, green=C · top pip=long, bottom pip=short"><span style="display:flex;flex-direction:column;gap:1px;align-items:center;padding:2px 0"><span style="width:8px;height:3px;background:#f97316;border-radius:1px;display:block"></span><span style="width:8px;height:3px;background:#eab308;border-radius:1px;display:block"></span><span style="width:8px;height:3px;background:#22c55e;border-radius:1px;display:block"></span></span></th>
+        <th style="width:160px">You</th>
+        <th style="width:160px">Colleague</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="ws-body"></tbody>
+  </table>
+
+</div><!-- end page-workshop -->
+
+<!-- ══ TRAVEL WINDOWS ══ -->
+<div class="page-section" id="page-windows">
+  <div id="tw-calendar"></div>
+</div><!-- end page-windows -->
+
+<!-- ══ TRAVEL CALENDAR ══ -->
+<div class="page-section" id="page-trcal">
+
+  <div class="tc-legend">
+    <div class="tc-legend-group">
+      <div class="tc-legend-group-label">Option A · Mid-April</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-a-short)"></div>A short · 10–17 Apr</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-a-long)"></div>A long · 10–19 Apr</div>
+    </div>
+    <div class="tc-legend-group">
+      <div class="tc-legend-group-label">Option B · Late April</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-b-short)"></div>B short · 24 Apr–1 May</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-b-long)"></div>B long · 24 Apr–3 May</div>
+    </div>
+    <div class="tc-legend-group">
+      <div class="tc-legend-group-label">Option C · May</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-c-short)"></div>C short · 8–15 May</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-c-long)"></div>C long · 8–17 May</div>
+    </div>
+    <div class="tc-legend-group">
+      <div class="tc-legend-group-label">Constraints</div>
+      <div class="tc-legend-item"><div class="tc-lswatch tc-constraint" style="background:#f3f0ff"></div>Fixed commitment</div>
+      <div class="tc-legend-item"><div class="tc-lswatch" style="background:var(--tc-weekend)"></div>Weekend</div>
+    </div>
+  </div>
+
+  <div class="tc-cal-wrap">
+    <table class="tc-table">
+      <thead>
+        <tr class="tc-r-labels">
+          <th class="tc-col-date"></th>
+          <th class="tc-h-a-short">A short</th>
+          <th class="tc-h-a-long">A long</th>
+          <th class="tc-h-b-short">B short</th>
+          <th class="tc-h-b-long">B long</th>
+          <th class="tc-h-c-short">C short</th>
+          <th class="tc-h-c-long">C long</th>
+          <th class="tc-col-date"></th>
+        </tr>
+        <tr class="tc-r-dates">
+          <th class="tc-col-date"></th>
+          <th class="tc-h-a-short">10–17 Apr</th>
+          <th class="tc-h-a-long">10–19 Apr</th>
+          <th class="tc-h-b-short">24 Apr–1 May</th>
+          <th class="tc-h-b-long">24 Apr–3 May</th>
+          <th class="tc-h-c-short">8–15 May</th>
+          <th class="tc-h-c-long">8–17 May</th>
+          <th class="tc-col-date"></th>
+        </tr>
+      </thead>
+      <tbody id="tc-cal-body"></tbody>
+    </table>
+  </div>
+
+</div><!-- end page-trcal -->
+
+<script>
+// ══ PAGE SWITCHER ══
+function showPage(id) {
+  document.querySelectorAll('.page-tab').forEach((t,i) => {
+    t.classList.toggle('active', ['schedule','content','workshop','windows','trcal'][i] === id);
+  });
+  document.querySelectorAll('.page-section').forEach(s => {
+    s.classList.toggle('visible', s.id === 'page-'+id);
+  });
+  if (id === 'windows') renderTravelCalendar();
+  if (id === 'trcal') renderTravelCal();
+}
+
+// ══ SHARED HELPERS ══
+function td(content, cls) {
+  return `<td${cls?' class="'+cls+'"':''}>${content}</td>`;
+}
+function addRow(tbody, cls, cells) {
+  const tr = document.createElement('tr');
+  tr.className = cls;
+  tr.innerHTML = cells;
+  tbody.appendChild(tr);
+}
+function pill(type) {
+  const map = {
+    you:      ['You',                   'p-you'],
+    sa:       ['SA — planned handover', 'p-sa'],
+    sa_opp:   ['SA covers — you away',  'p-sa-opp'],
+    travel:   ['Away — SA unavailable', 'p-travel'],
+    holiday:  ['National Holiday',      'p-holiday'],
+    room:     ['No Room',               'p-room'],
+    fieldwork:['Fieldwork',             'p-fw'],
+    slovakia: ['Slovakia fieldtrip',    'p-slovakia'],
+    post:     ['Post-fieldwork TBC',    'p-empty'],
+    skip:     ['Not teaching',          'p-empty'],
+  };
+  const [lbl,pc] = map[type] || ['—','p-empty'];
+  return `<span class="pill ${pc}">${lbl}</span>`;
+}
+
+// Travel window colours (matching timeline)
+const TW_COLOURS = { A:'#f97316', B:'#eab308', C:'#22c55e' };
+const TW_WINDOWS = {
+  A: { short: { s: new Date(2026,3,10), e: new Date(2026,3,17) }, long: { s: new Date(2026,3,10), e: new Date(2026,3,19) } },
+  B: { short: { s: new Date(2026,3,24), e: new Date(2026,4,1)  }, long: { s: new Date(2026,3,24), e: new Date(2026,4,3)  } },
+  C: { short: { s: new Date(2026,4,8),  e: new Date(2026,4,15) }, long: { s: new Date(2026,4,8),  e: new Date(2026,4,17) } },
+};
+
+function twCell(dateStr) {
+  // Parse date string like "Wed 8 Apr" or "Thu 30 Apr" or "Wed 6 May" etc.
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const parts = dateStr.trim().split(' ');
+  if (parts.length < 3) return `<td class="tw-cell"></td>`;
+  const dayNum = parseInt(parts[parts.length-2]);
+  const mon = months[parts[parts.length-1]];
+  if (isNaN(dayNum) || mon === undefined) return `<td class="tw-cell"></td>`;
+  const dt = new Date(2026, mon, dayNum);
+  return twCellFromDate(dt);
+}
+
+function twCellFromDate(dt) {
+  let inner = '';
+  let hasAny = false;
+  ['A','B','C'].forEach(opt => {
+    const w = TW_WINDOWS[opt];
+    const inLong  = dt >= w.long.s  && dt <= w.long.e;
+    const inShort = dt >= w.short.s && dt <= w.short.e;
+    const col = TW_COLOURS[opt];
+    if (inLong) {
+      hasAny = true;
+      inner += `<div class="tw-pip" style="background:${col};opacity:${inShort?'1':'0.45'};" title="Option ${opt} ${inShort?'short+long':'long only'}"></div>`;
+      inner += `<div class="tw-pip" style="background:${col};opacity:${inShort?'0.6':'0.15'};" title="Option ${opt} short"></div>`;
+    } else {
+      inner += `<div class="tw-gap"></div><div class="tw-gap"></div>`;
+    }
+  });
+  return `<td class="tw-cell">${inner}</td>`;
+}
+const BASE = [
+  ['_MONTH','April'],
+  ['Wed 8 Apr', 'Wed',null,null],
+  ['Thu 9 Apr', 'Thu','skip','Skipped by agreement'],
+  ['Wed 15 Apr','Wed',null,null],
+  ['Thu 16 Apr','Thu',null,null],
+  ['Wed 22 Apr','Wed','skip','Confirmed skip'],
+  ['Thu 23 Apr','Thu','room','No room available — cannot be covered by SA'],
+  ['Wed 29 Apr','Wed',null,null],
+  ['Thu 30 Apr','Thu',null,null],
+  ['_MONTH','May'],
+  ['Wed 6 May', 'Wed',null,null],
+  ['Thu 7 May', 'Thu',null,null],
+  ['Wed 13 May','Wed',null,null],
+  ['Thu 14 May','Thu','holiday','National holiday'],
+  ['Wed 20 May','Wed',null,null],
+  ['Thu 21 May','Thu',null,null],
+  ['Wed 27 May','Wed',null,null],
+  ['Thu 28 May','Thu',null,null],
+  ['_MONTH','June — Fieldwork Week'],
+  ['Mon 1 Jun','Mon','fieldwork','SA present — days TBC'],
+  ['Tue 2 Jun','Tue','fieldwork','SA present — days TBC'],
+  ['Wed 3 Jun','Wed','fieldwork','SA present — days TBC'],
+  ['Thu 4 Jun','Thu','fieldwork','SA present — days TBC'],
+  ['Fri 5 Jun','Fri','fieldwork','SA present — days TBC'],
+  ['_MONTH','June — Post-Fieldwork'],
+  ['Mon 8 Jun','Mon','slovakia',null],
+  ['Tue 9 Jun','Tue','slovakia',null],
+  ['Wed 10 Jun','Wed','slovakia',null],
+  ['Thu 11 Jun','Thu','slovakia',null],
+  ['Fri 12 Jun','Fri','slovakia',null],
+  ['Wed 17 Jun','Wed','post',null],
+  ['Thu 18 Jun','Thu','post',null],
+  ['Wed 24 Jun','Wed','skip','Confirmed skip'],
+  ['Thu 25 Jun','Thu','skip','Confirmed skip'],
+  ['_MONTH','July'],
+  ['Wed 1 Jul','Wed','skip','Confirmed skip'],
+  ['Thu 2 Jul','Thu','skip','Confirmed skip'],
+  ['Wed 8 Jul','Wed','skip','Beyond 4 post-fieldwork sessions'],
+  ['Thu 9 Jul','Thu','post',null],
+  ['Wed 15 Jul','Wed','skip','Beyond 4 post-fieldwork sessions'],
+  ['Wed 16 Jul','Wed','skip','End of semester'],
+];
+
+function getPlans() {
+  // SA presence notes (plan-independent where you're teaching)
+  const SA = {
+    'Wed 8 Apr': 'SA present — morning only (intro)',
+    'Thu 16 Apr': 'SA present — morning only (full day possible if at Ausländerbehörde)',
+    'Wed 29 Apr': 'SA present — morning only',
+    'Thu 30 Apr': 'SA present — co-teaching (full day)',
+    'Wed 6 May':  'SA present — co-teaching (full day)',
+    'Thu 7 May':  'SA present — co-teaching (full day)',
+    'Wed 13 May': 'SA present — co-teaching (full day); questionnaire, rough ideas',
+    'Thu 21 May': 'SA present — co-teaching (full day); questionnaire finish',
+    'Thu 11 Jun': 'SA possibly on Slovakia fieldtrip',
+    'Thu 9 Jul':  'SA present — co-teaching (full day); review session',
+  };
+  return {
+    A: {
+      'Wed 8 Apr': ['you', SA['Wed 8 Apr']],
+      'Thu 9 Apr': ['skip','Skipped by agreement'],
+      'Wed 15 Apr':['sa_opp','Away — travel Option A (Fri 10–Sun 19 Apr)'],
+      'Thu 16 Apr':['sa_opp','Away — travel Option A'],
+      'Wed 29 Apr':['you', SA['Wed 29 Apr'] + ' · Interview possible — confirm'],
+      'Thu 30 Apr':['you', SA['Thu 30 Apr']],
+      'Wed 6 May': ['you', SA['Wed 6 May']],
+      'Thu 7 May': ['you', SA['Thu 7 May']],
+      'Wed 13 May':['you', SA['Wed 13 May']],
+      'Wed 20 May':['you',null],
+      'Thu 21 May':['you', SA['Thu 21 May']],
+      'Wed 27 May':['you',null],
+      'Thu 28 May':['you',null],
+      'Thu 9 Jul': ['you', SA['Thu 9 Jul']],
+    },
+    B: {
+      'Wed 8 Apr': ['you', SA['Wed 8 Apr']],
+      'Thu 9 Apr': ['skip','Skipped by agreement'],
+      'Wed 15 Apr':['you','SA present — morning only'],
+      'Thu 16 Apr':['you', SA['Thu 16 Apr']],
+      'Wed 29 Apr':['sa_opp','Away — travel Option B (Fri 24 Apr–Sun 3 May)'],
+      'Thu 30 Apr':['sa_opp','Away — travel Option B'],
+      'Wed 6 May': ['you', SA['Wed 6 May']],
+      'Thu 7 May': ['you', SA['Thu 7 May']],
+      'Wed 13 May':['you', SA['Wed 13 May']],
+      'Wed 20 May':['you',null],
+      'Thu 21 May':['you', SA['Thu 21 May']],
+      'Wed 27 May':['you',null],
+      'Thu 28 May':['you',null],
+      'Thu 9 Jul': ['you', SA['Thu 9 Jul']],
+    },
+    C: {
+      'Wed 8 Apr': ['you', SA['Wed 8 Apr']],
+      'Thu 9 Apr': ['skip','Skipped by agreement'],
+      'Wed 15 Apr':['skip','Only one April week — teaching 29/30 Apr'],
+      'Thu 16 Apr':['skip','Only one April week — teaching 29/30 Apr'],
+      'Wed 29 Apr':['you', SA['Wed 29 Apr'] + ' · Interview possible — confirm'],
+      'Thu 30 Apr':['you', SA['Thu 30 Apr']],
+      'Wed 6 May': ['you', SA['Wed 6 May']],
+      'Thu 7 May': ['sa','Planned handover — last session before travel · ' + SA['Thu 7 May']],
+      'Wed 13 May':['sa_opp','Away — travel Option C (Fri 8–Sun 17 May)'],
+      'Wed 20 May':['you',null],
+      'Thu 21 May':['you', SA['Thu 21 May']],
+      'Wed 27 May':['you',null],
+      'Thu 28 May':['you',null],
+      'Thu 9 Jul': ['you', SA['Thu 9 Jul']],
+    },
+    X: {
+      'Wed 8 Apr': ['you', SA['Wed 8 Apr']],
+      'Thu 9 Apr': ['skip','Skipped by agreement'],
+      'Wed 15 Apr':['skip','Only one April week — teaching 29/30 Apr'],
+      'Thu 16 Apr':['skip','Only one April week — teaching 29/30 Apr'],
+      'Wed 29 Apr':['you', SA['Wed 29 Apr']],
+      'Thu 30 Apr':['you', SA['Thu 30 Apr']],
+      'Wed 6 May': ['you', SA['Wed 6 May']],
+      'Thu 7 May': ['you', SA['Thu 7 May']],
+      'Wed 13 May':['skip','Potential travel date (Option C)'],
+      'Wed 20 May':['you',null],
+      'Thu 21 May':['you', SA['Thu 21 May']],
+      'Wed 27 May':['you',null],
+      'Thu 28 May':['you',null],
+      'Thu 9 Jul': ['you', SA['Thu 9 Jul']],
+    },
+    W: {
+      'Wed 8 Apr': ['you', SA['Wed 8 Apr']],
+      'Thu 9 Apr': ['skip','Skipped by agreement'],
+      'Wed 15 Apr':['skip','Only one April week — teaching 29/30 Apr'],
+      'Thu 16 Apr':['skip','Only one April week — teaching 29/30 Apr'],
+      'Wed 29 Apr':['sa_opp','Potential travel date (Option B) — SA available'],
+      'Thu 30 Apr':['sa_opp','Potential travel date (Option B) — SA available'],
+      'Wed 6 May': ['you', SA['Wed 6 May']],
+      'Thu 7 May': ['you', SA['Thu 7 May']],
+      'Wed 13 May':['sa_opp','Potential travel date (Option C) — SA available'],
+      'Wed 20 May':['you',null],
+      'Thu 21 May':['you', SA['Thu 21 May']],
+      'Wed 27 May':['you',null],
+      'Thu 28 May':['you',null],
+      'Thu 9 Jul': ['you', SA['Thu 9 Jul']],
+    }
+  };
+}
+
+function showPlan(planId) {
+  document.querySelectorAll('#sch-plan-tabs .tab').forEach((t,i) => {
+    t.classList.toggle('active', ['A','B','C','X','W'][i] === planId);
+  });
+  renderTimeline('tl-schedule', planId);
+  const plan = getPlans()[planId];
+  const tbody = document.getElementById('sb');
+  tbody.innerHTML = '';
+  let hrs=0, sws=0, dayN=0, youD=0, saD=0, saOppD=0;
+
+  BASE.forEach(r => {
+    if (r[0]==='_MONTH') { addRow(tbody,'r-month',`<td colspan="8">${r[1]}</td>`); return; }
+    const [date,day,baseType,baseNote] = r;
+    const ov = plan[date];
+    let type = baseType, note = baseNote;
+    if (ov && !baseType)    { type=ov[0]; note=ov[1]||baseNote; }
+    else if (ov && baseType){ 
+      // Allow plan to promote a post/skip row to a teaching day
+      if (['post','skip'].includes(baseType) && ['you','sa','sa_opp'].includes(ov[0])) {
+        type=ov[0];
+      }
+      note=ov[1]||baseNote;
+    }
+
+    const isTeach = ['you','sa','sa_opp'].includes(type);
+    const rowCls = type==='sa_opp' ? ' opp' : (type==='sa' ? ' sa-hand' : '');
+
+    if (type==='fieldwork') {
+      hrs+=4; sws+=4;
+      addRow(tbody,'r-single r-fw',`${td(`<strong>${date}</strong>`)}${td(day,'sid')}${td(pill(type))}${twCell(date)}${td('—','sid')}${td('All day','tlbl')}${td(note||'','nt')}${td(hrs+' hrs','tc')}${td(sws+' SWS','tc')}`);
+      return;
+    }
+    if (type==='slovakia') {
+      addRow(tbody,'r-single r-sk',`${td(`<strong>${date}</strong>`)}${td(day,'sid')}${td(pill(type))}${twCell(date)}${td('—','sid')}${td('All day','tlbl')}${td('Slovakia fieldtrip (provisional) · SA possibly present','nt')}${td('—','tc')}${td('—','tc')}`);
+      return;
+    }
+    // post: if plan overrides to a teaching type, fall through to teaching renderer
+    if (type==='post') {
+      addRow(tbody,'r-post',`${td(`<strong>${date}</strong>`)}${td(day,'sid')}${td(pill(type))}${twCell(date)}${td('To be planned after fieldwork week','nt')}${td('','tlbl')}${td('','nt')}${td('—','tc')}${td('—','tc')}`);
+      return;
+    }
+    if (!isTeach) {
+      addRow(tbody,'r-single',`${td(`<strong>${date}</strong>`)}${td(day,'sid')}${td(pill(type))}${twCell(date)}${td('—','sid')}${td('—','tlbl')}${td(note||'','nt')}${td('—','tc')}${td('—','tc')}`);
+      return;
+    }
+
+    dayN++;
+    if (type==='you') youD++;
+    else if (type==='sa') saD++;
+    else saOppD++;
+    hrs+=4; sws+=4;
+    const hA=hrs-2, hB=hrs, sA=sws-2, sB=sws;
+    const hitA=hA===60, hitB=hB===60;
+
+    const twC = twCell(date);
+    addRow(tbody,'r-a'+rowCls,`${td(`<strong>${date}</strong>`)}${td(day,'sid')}${td(pill(type))}${twC}${td(`Session ${dayN}a &nbsp;<span style="opacity:0.55;font-size:0.6rem">2 SWS</span>`,'sid')}${td('10:15–11:45','tlbl')}${td(note||'','nt')}${td(hA+' hrs','tc'+(hitA?' hit':''))}${td(sA+' SWS','tc'+(hitA?' hit':''))}`);
+    addRow(tbody,'r-brk'+rowCls,`${td('')}${td('')}${td('')}<td class="tw-cell"></td>${td('— break —','nt')}${td('11:45–12:15','tlbl')}${td('')}${td('')}${td('')}`);
+    addRow(tbody,'r-b'+rowCls,`${td('')}${td('')}${td('')}<td class="tw-cell"></td>${td(`Session ${dayN}b &nbsp;<span style="opacity:0.55;font-size:0.6rem">2 SWS</span>`,'sid')}${td('12:15–13:45','tlbl')}${td('')}${td(hB+' hrs','tc'+(hitB?' hit':''))}${td(sB+' SWS','tc'+(hitB?' hit':''))}`);
+  });
+
+  const preDays = BASE.filter(r => {
+    if (r[0]==='_MONTH') return false;
+    const ov=plan[r[0]]; const t=(ov&&!r[2])?ov[0]:r[2];
+    return ['you','sa','sa_opp'].includes(t) && !r[0].includes('Jun') && !r[0].includes('Jul');
+  }).length;
+  const preH=preDays*4, total=preH+20;
+  const youH=youD*4, saH=(saD+saOppD)*4;
+  document.getElementById('stats').innerHTML=`
+    <div class="stat-item"><strong>${preDays*2}</strong><span class="stat-label">Pre-fw slots</span></div>
+    <div class="stat-item"><strong>${preH}</strong><span class="stat-label">Pre-fw hrs / SWS</span></div>
+    <div class="stat-item"><strong>20</strong><span class="stat-label">Fieldwork hrs / SWS</span></div>
+    <div class="stat-item"><strong style="color:var(--you)">${total}</strong><span class="stat-label">Total (excl. post)</span></div>
+    <div class="stat-item" style="border-left:2px solid var(--rule);padding-left:1.2rem"><strong style="color:var(--you)">${youD*2}</strong><span class="stat-label">Your slots</span></div>
+    <div class="stat-item"><strong style="color:var(--you)">${youH} hrs</strong><span class="stat-label">Your hours</span></div>
+    <div class="stat-item" style="border-left:2px solid var(--rule);padding-left:1.2rem"><strong style="color:var(--sa-opp)">${(saD+saOppD)*2}</strong><span class="stat-label">SA slots</span></div>
+    <div class="stat-item"><strong style="color:var(--sa-opp)">${saH} hrs</strong><span class="stat-label">SA hours</span></div>
+  `;
+}
+
+// ══ WORKSHOP AVAILABILITY ══
+const MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function d(y,m,day) { return new Date(y,m-1,day); }
+function addDays(dt,n) { const x=new Date(dt); x.setDate(x.getDate()+n); return x; }
+
+const COLLEAGUE_WINDOWS = [
+  { start: d(2026,4,13), end: d(2026,5,19) },
+  { start: d(2026,6,3),  end: d(2026,6,17) },
+];
+
+const TRAVEL_WINDOWS = {
+  'A-short': { start: d(2026,4,10), end: d(2026,4,17) },  // Fri 10 – Fri 17 Apr
+  'A-long':  { start: d(2026,4,10), end: d(2026,4,19) },  // Fri 10 – Sun 19 Apr
+  'B-short': { start: d(2026,4,24), end: d(2026,5,1)  },  // Fri 24 Apr – Fri 1 May
+  'B-long':  { start: d(2026,4,24), end: d(2026,5,3)  },  // Fri 24 Apr – Sun 3 May
+  'C-short': { start: d(2026,5,8),  end: d(2026,5,15) },  // Fri 8 – Fri 15 May
+  'C-long':  { start: d(2026,5,8),  end: d(2026,5,17) },  // Fri 8 – Sun 17 May
+  'X': null,
+  'W': null,
+};
+
+const ALL_TRAVEL_WINDOWS = [
+  { start: d(2026,4,10), end: d(2026,4,19) },
+  { start: d(2026,4,24), end: d(2026,5,3)  },
+  { start: d(2026,5,8),  end: d(2026,5,17) },
+];
+
+const ALL_TRAVEL_WINDOWS_SHORT = [
+  { start: d(2026,4,10), end: d(2026,4,17) },
+  { start: d(2026,4,24), end: d(2026,5,1)  },
+  { start: d(2026,5,8),  end: d(2026,5,15) },
+];
+
+// Teaching Wednesdays & Thursdays (all that appear in BASE as potential teaching days)
+const TEACHING_DATES = [
+  d(2026,4,8),d(2026,4,9),d(2026,4,15),d(2026,4,16),
+  d(2026,4,29),d(2026,4,30),
+  d(2026,5,6),d(2026,5,7),d(2026,5,13),
+  d(2026,5,20),d(2026,5,21),d(2026,5,27),d(2026,5,28),
+  d(2026,6,10),d(2026,6,11),d(2026,6,17),d(2026,6,18),
+];
+
+const FIELDWORK_DATES = [d(2026,6,1),d(2026,6,2),d(2026,6,3),d(2026,6,4),d(2026,6,5)];
+const SLOVAKIA_DATES  = [d(2026,6,8),d(2026,6,9),d(2026,6,10),d(2026,6,11),d(2026,6,12)];
+const SKIP_DATES = [
+  d(2026,4,22),d(2026,4,23),d(2026,5,5),d(2026,5,14),
+  d(2026,6,24),d(2026,6,25),d(2026,7,1),d(2026,7,2),
+];
+
+function dtEq(a,b) {
+  return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+}
+function inList(dt, list) { return list.some(x => dtEq(dt,x)); }
+function inWindow(dt, win) { return win && dt>=win.start && dt<=win.end; }
+
+function yourStatus(dt, planId) {
+  if (inList(dt, FIELDWORK_DATES)) return { busy:true, reason:'Fieldwork week' };
+  if (inList(dt, SLOVAKIA_DATES))  return { busy:true, reason:'Slovakia fieldtrip (workshop)' };
+  if (inList(dt, SKIP_DATES))      return { busy:true, reason: dtEq(dt, d(2026,5,5)) ? 'German exam' : 'Confirmed skip / holiday' };
+  if (planId === 'W') {
+    if (ALL_TRAVEL_WINDOWS.some(w => dt>=w.start && dt<=w.end))
+      return { busy:true, reason:'Potential travel (any option)' };
+  } else if (planId === 'W-short') {
+    if (ALL_TRAVEL_WINDOWS_SHORT.some(w => dt>=w.start && dt<=w.end))
+      return { busy:true, reason:'Potential travel (short, any option)' };
+  } else {
+    const win = TRAVEL_WINDOWS[planId];
+    if (win && dt>=win.start && dt<=win.end) return { busy:true, reason:'Away — travel' };
+  }
+  if (inList(dt, TEACHING_DATES))  return { busy:true, reason:'Teaching day' };
+  return { busy:false, reason:'' };
+}
+
+function colleagueAvail(dt) {
+  return COLLEAGUE_WINDOWS.some(w => dt>=w.start && dt<=w.end) ||
+         inList(dt, SLOVAKIA_DATES);
+}
+
+function isSlovakiaDay(dt) { return inList(dt, SLOVAKIA_DATES); }
+
+function showWorkshop(planId) {
+  const WS_PLANS = ['A-short','A-long','B-short','B-long','C-short','C-long','X','W-short','W'];
+  document.querySelectorAll('#ws-plan-tabs .tab').forEach((t,i) => {
+    t.classList.toggle('active', WS_PLANS[i] === planId);
+  });
+  renderTimeline('tl-workshop', planId);
+  const tbody = document.getElementById('ws-body');
+  tbody.innerHTML='';
+
+  let cur = d(2026,4,8);
+  const end = d(2026,7,16);
+  let bothCount=0, lastMonth=-1;
+
+  while (cur<=end) {
+    if (cur.getMonth()!==lastMonth) {
+      lastMonth=cur.getMonth();
+      const tr=document.createElement('tr');
+      tr.className='ws-month';
+      tr.innerHTML=`<td colspan="6">${MN[cur.getMonth()]} ${cur.getFullYear()}</td>`;
+      tbody.appendChild(tr);
+    }
+
+    const colAvail = colleagueAvail(cur);
+    const ys = yourStatus(cur, planId);
+    const youFree = !ys.busy;
+    const isSlovakia = isSlovakiaDay(cur);
+    if (youFree && colAvail) bothCount++;
+
+    const rowCls = isSlovakia                  ? 'ws-both'
+                 : youFree && colAvail         ? 'ws-both'
+                 : !youFree && colAvail        ? 'ws-col-only'
+                 : youFree && !colAvail        ? 'ws-you-only'
+                 : 'ws-neither';
+
+    const wPill = isSlovakia                   ? `<span class="pill p-slovakia">Slovakia fieldtrip</span>`
+                : youFree && colAvail          ? '<span class="pill p-both">Both available</span>'
+                : !youFree && colAvail         ? '<span class="pill p-col-only">Colleague only</span>'
+                : youFree && !colAvail         ? '<span class="pill p-you-only">You only</span>'
+                : '<span class="pill p-neither">Neither</span>';
+
+    const youLbl = isSlovakia ? '★ Slovakia trip' : youFree ? '✓ Free' : `✗ ${ys.reason}`;
+    const colLbl = colAvail ? '✓ Available' : '✗ Away';
+    const noteLbl = isSlovakia ? 'Workshop fieldtrip — colleague + SA possibly present'
+                  : youFree && colAvail ? 'Workshop opportunity' : '';
+
+    const tr=document.createElement('tr');
+    tr.className=rowCls;
+    tr.innerHTML=`
+      <td><strong>${cur.getDate()} ${MN[cur.getMonth()]}</strong></td>
+      <td style="color:var(--empty);font-size:0.62rem">${DN[cur.getDay()]}</td>
+      <td>${wPill}</td>
+      ${twCellFromDate(cur)}
+      <td style="font-size:0.62rem;color:${youFree?'var(--you)':'var(--empty)'}">${youLbl}</td>
+      <td style="font-size:0.62rem;color:${colAvail?'#5c2a7a':'var(--empty)'}">${colLbl}</td>
+      <td style="font-size:0.62rem;color:var(--empty);font-style:italic">${noteLbl}</td>
+    `;
+    tbody.appendChild(tr);
+    cur=addDays(cur,1);
+  }
+
+  const planLabel = {
+    'A-short':'Option A short (10–17 Apr)', 'A-long':'Option A long (10–19 Apr)',
+    'B-short':'Option B short (24 Apr–1 May)', 'B-long':'Option B long (24 Apr–3 May)',
+    'C-short':'Option C short (8–15 May)', 'C-long':'Option C long (8–17 May)',
+    'X':'no travel',
+    'W-short':'worst case short (all short windows combined)',
+    'W':'worst case long (all long windows combined)'
+  }[planId] || planId;
+  document.getElementById('ws-summary').textContent =
+    `${bothCount} days where both of you are free — ${planLabel}.`;
+}
+
+// ══ CONTENT PLAN ══
+
+// Content blocks helper
+function act(label) { return `<span class="cp-activity">▶ ${label}</span>`; }
+function rdg(label) { return `<span class="cp-reading">📖 ${label}</span>`; }
+function mins(n)    { return `<span class="cp-mins">${n} min</span>`; }
+
+// Session definitions — plan-independent content
+const SESSIONS = [
+  {
+    id: 'S1',
+    topic: 'Induction',
+    block: 'Orientation',
+    content: [
+      { text: 'Module logic, structure, assessment, fieldwork overview', min: 45 },
+      { text: act('Ice-breaker: what do students think "research" means?'), min: 30 },
+      { text: 'Introduction to the research site — photos, maps, brief GDR/Neustadt context', min: 45 },
+    ],
+    sa: 'Present morning — introduce role',
+    note: 'First session; set tone carefully',
+  },
+  {
+    id: 'S2',
+    topic: 'Principles of Research & Knowledge Creation',
+    block: 'Foundations',
+    content: [
+      { text: 'What counts as knowledge? Everyday vs. scientific knowledge', min: 45 },
+      { text: 'Positivism, interpretivism, constructivism — accessible introduction', min: 60 },
+      { text: act('Small groups: which approach suits which question?'), min: 45 },
+      { text: rdg('German text: introductory Wissenschaftstheorie'), min: null },
+    ],
+    sa: 'German reading group follow-up',
+    note: null,
+  },
+  {
+    id: 'S3',
+    topic: 'Methodologies & Research Design',
+    block: 'Foundations',
+    content: [
+      { text: 'What is a methodology? Connecting epistemology to method', min: 45 },
+      { text: 'Research design: questions, hypotheses, frameworks', min: 60 },
+      { text: act('Students sketch a mini research design for a familiar topic'), min: 45 },
+    ],
+    sa: 'German-language follow-up discussion',
+    note: 'Paired with S2 in same week',
+  },
+  {
+    id: 'S4',
+    topic: 'Quantitative & Qualitative Methods',
+    block: 'Methods',
+    content: [
+      { text: 'When and why quantitative? Survey logic, measurement, generalisability', min: 60 },
+      { text: 'When and why qualitative? Depth, meaning, context', min: 60 },
+      { text: act('Same research question, two methods — comparative exercise'), min: 30 },
+    ],
+    sa: 'Co-teaching — reinforce in German',
+    note: null,
+  },
+  {
+    id: 'S5',
+    topic: 'Questionnaire Design',
+    block: 'Methods',
+    content: [
+      { text: 'Principles: question types, wording, order, bias', min: 60 },
+      { text: 'German questionnaire language and register', min: 45, sa: true },
+      { text: act('Workshop: students draft 5 questions for fieldwork questionnaire'), min: 45 },
+    ],
+    sa: 'Co-teaching — German language essential',
+    note: 'Must precede 13 May session',
+  },
+  {
+    id: 'S6',
+    topic: 'Neustadt Reading & Discussion',
+    block: 'Context',
+    content: [
+      { text: rdg('German text: post-socialist urbanism / stigmatised neighbourhoods'), min: 45 },
+      { text: act('Discussion: how does the literature connect to the Neustadt site?'), min: 45 },
+      { text: 'Maps, images, neighbourhood data — building site familiarity', min: 30 },
+    ],
+    sa: 'Can lead German discussion independently',
+    note: 'Paired week with S7',
+  },
+  {
+    id: 'S7',
+    topic: 'Consumption Geographies + Questionnaire Workshop',
+    block: 'Context',
+    content: [
+      { text: 'Consumption geographies: everyday consumption and space', min: 45 },
+      { text: 'Post-socialist everyday life and the shopping mall', min: 30 },
+      { text: act('Small groups bring rough questionnaire ideas — peer feedback'), min: 30 },
+      { text: rdg('Short German text: consumption and urban space'), min: null },
+    ],
+    sa: 'Co-teaching — questionnaire rough ideas (German)',
+    note: 'Questionnaire rough ideas due this session',
+  },
+  {
+    id: 'S8',
+    topic: 'Ethics + Questionnaire Finalisation',
+    block: 'Context',
+    content: [
+      { text: 'Research ethics: consent, anonymity, vulnerability, positionality', min: 60 },
+      { text: 'Ethics in practice: approaching strangers, refusals, site-specific issues', min: 30 },
+      { text: act('Questionnaire finalisation workshop — SA leads in German'), min: 60, sa: true },
+    ],
+    sa: 'Co-teaching — questionnaire finish critical',
+    note: 'Final questionnaire version agreed by end of session',
+  },
+  {
+    id: 'S9',
+    topic: 'Practical Reflections on Data Collection',
+    block: 'Preparation',
+    content: [
+      { text: 'Access, gatekeeping, sampling strategies', min: 45 },
+      { text: 'Researcher positionality and reflexivity', min: 45 },
+      { text: act('Discussion: what could go wrong? Contingency planning'), min: 30 },
+      { text: rdg('German text: reflexivity / fieldwork experience'), min: null },
+    ],
+    sa: null,
+    note: null,
+  },
+  {
+    id: 'S10',
+    topic: 'Practical Instructions',
+    block: 'Preparation',
+    content: [
+      { text: 'Site logistics: transport, safety, timing, group assignments', min: 30 },
+      { text: 'Administering the questionnaire: script, approach, recording responses', min: 45 },
+      { text: act('Dry run role-play — pairs practice approaching and surveying'), min: 45 },
+      { text: 'Q&A and contingencies', min: 30 },
+    ],
+    sa: null,
+    note: 'Final session before fieldwork',
+  },
+  {
+    id: 'FW',
+    topic: 'Fieldwork Week',
+    block: 'Fieldwork',
+    content: [
+      { text: 'Data collection at the Neustadt shopping mall', min: null },
+    ],
+    sa: 'Present some days — TBC',
+    note: '1–5 June',
+    fieldwork: true,
+  },
+  {
+    id: 'S11a',
+    topic: 'Working with Your Data (duplicate)',
+    block: 'Post-Fieldwork',
+    content: [
+      { text: 'Cleaning and entering questionnaire data — Google Sheets introduction', min: 45 },
+      { text: 'First look: frequencies and basic counts', min: 45 },
+      { text: act('Hands-on: students enter and explore their own data'), min: 45 },
+    ],
+    sa: null,
+    note: 'Provisional — may be additional fieldwork day',
+    provisional: true,
+  },
+  {
+    id: 'S12a',
+    topic: 'Data Analysis & Report Writing (duplicate)',
+    block: 'Post-Fieldwork',
+    content: [
+      { text: 'Basic quantitative analysis: crosstabs, patterns, outliers', min: 45 },
+      { text: 'Connecting findings back to consumption geographies context', min: 30 },
+      { text: 'Structure of a research report — what goes where and why', min: 45 },
+    ],
+    sa: 'Co-teaching',
+    note: 'Provisional — may be additional fieldwork day',
+    provisional: true,
+  },
+  {
+    id: 'S11',
+    topic: 'Working with Your Data',
+    block: 'Post-Fieldwork',
+    content: [
+      { text: 'Cleaning and entering questionnaire data — Google Sheets introduction', min: 45 },
+      { text: 'First look: frequencies and basic counts', min: 45 },
+      { text: act('Hands-on: students enter and explore their own data'), min: 45 },
+    ],
+    sa: null,
+    note: null,
+  },
+  {
+    id: 'S12',
+    topic: 'Data Analysis & Report Writing',
+    block: 'Post-Fieldwork',
+    content: [
+      { text: 'Basic quantitative analysis: crosstabs, patterns, outliers', min: 45 },
+      { text: 'Connecting findings back to consumption geographies context', min: 30 },
+      { text: 'Structure of a research report — what goes where and why', min: 45 },
+    ],
+    sa: 'Co-teaching',
+    note: null,
+  },
+  {
+    id: 'S13',
+    topic: 'Writing Workshop',
+    block: 'Post-Fieldwork',
+    content: [
+      { text: 'Structured writing time — students work on reports', min: 90 },
+      { text: act('Peer feedback pairs — exchange and comment on drafts'), min: 45 },
+      { text: 'Group debrief and common issues', min: 30 },
+    ],
+    sa: 'Co-facilitating',
+    note: null,
+  },
+  {
+    id: 'S14',
+    topic: 'Open Q&A / Review',
+    block: 'Post-Fieldwork',
+    content: [
+      { text: 'Open Q&A — students bring questions on final texts', min: 120 },
+      { text: act('Small group consultations if needed'), min: 60 },
+    ],
+    sa: 'Co-facilitating',
+    note: 'Final session before submission',
+  },
+];
+
+// Per-plan date assignments
+const CP_PLANS = {
+  A: [
+    { date: 'Wed 8 Apr',  day: 'Wed', session: 'S1',  type: 'you' },
+    { date: 'Thu 9 Apr',  day: 'Thu', session: null,   type: 'skip', note: 'Skipped by agreement' },
+    { date: 'Wed 15 Apr', day: 'Wed', session: null,   type: 'sa_opp', note: 'Away — travel Option A' },
+    { date: 'Thu 16 Apr', day: 'Thu', session: null,   type: 'sa_opp', note: 'Away — travel Option A' },
+    { date: 'Wed 22 Apr', day: 'Wed', session: null,   type: 'skip', note: 'Confirmed skip' },
+    { date: 'Thu 23 Apr', day: 'Thu', session: null,   type: 'skip', note: 'No room available' },
+    { date: 'Wed 29 Apr', day: 'Wed', session: 'S2',   type: 'you' },
+    { date: 'Thu 30 Apr', day: 'Thu', session: 'S3',   type: 'you' },
+    { date: 'Wed 6 May',  day: 'Wed', session: 'S4',   type: 'you' },
+    { date: 'Thu 7 May',  day: 'Thu', session: 'S5',   type: 'you' },
+    { date: 'Wed 13 May', day: 'Wed', session: 'S7',   type: 'you' },
+    { date: 'Thu 14 May', day: 'Thu', session: null,   type: 'skip', note: 'National holiday' },
+    { date: 'Wed 20 May', day: 'Wed', session: 'S6',   type: 'you' },
+    { date: 'Thu 21 May', day: 'Thu', session: 'S8',   type: 'you' },
+    { date: 'Wed 27 May', day: 'Wed', session: 'S9',   type: 'you' },
+    { date: 'Thu 28 May', day: 'Thu', session: 'S10',  type: 'you' },
+    { date: '1–5 Jun',    day: '',    session: 'FW',   type: 'fw' },
+    { date: 'Wed 10 Jun', day: 'Wed', session: null,   type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Thu 11 Jun', day: 'Thu', session: null,   type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Wed 17 Jun', day: 'Wed', session: 'S11',  type: 'you' },
+    { date: 'Thu 18 Jun', day: 'Thu', session: 'S12',  type: 'you' },
+    { date: 'Thu 9 Jul',  day: 'Thu', session: 'S14',  type: 'you' },
+  ],
+  B: [
+    { date: 'Wed 8 Apr',  day: 'Wed', session: 'S1',  type: 'you' },
+    { date: 'Thu 9 Apr',  day: 'Thu', session: null,  type: 'skip', note: 'Skipped by agreement' },
+    { date: 'Wed 15 Apr', day: 'Wed', session: 'S2',  type: 'you' },
+    { date: 'Thu 16 Apr', day: 'Thu', session: 'S3',  type: 'you' },
+    { date: 'Wed 22 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Confirmed skip' },
+    { date: 'Thu 23 Apr', day: 'Thu', session: null,  type: 'skip', note: 'No room available' },
+    { date: 'Wed 29 Apr', day: 'Wed', session: null,  type: 'sa_opp', note: 'Away — travel Option B' },
+    { date: 'Thu 30 Apr', day: 'Thu', session: null,  type: 'sa_opp', note: 'Away — travel Option B' },
+    { date: 'Wed 6 May',  day: 'Wed', session: 'S4',  type: 'you' },
+    { date: 'Thu 7 May',  day: 'Thu', session: 'S5',  type: 'you' },
+    { date: 'Wed 13 May', day: 'Wed', session: 'S7',  type: 'you' },
+    { date: 'Thu 14 May', day: 'Thu', session: null,  type: 'skip', note: 'National holiday' },
+    { date: 'Wed 20 May', day: 'Wed', session: 'S6',  type: 'you' },
+    { date: 'Thu 21 May', day: 'Thu', session: 'S8',  type: 'you' },
+    { date: 'Wed 27 May', day: 'Wed', session: 'S9',  type: 'you' },
+    { date: 'Thu 28 May', day: 'Thu', session: 'S10', type: 'you' },
+    { date: '1–5 Jun',    day: '',    session: 'FW',  type: 'fw' },
+    { date: 'Wed 10 Jun', day: 'Wed', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Thu 11 Jun', day: 'Thu', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Wed 17 Jun', day: 'Wed', session: 'S11', type: 'you' },
+    { date: 'Thu 18 Jun', day: 'Thu', session: 'S12', type: 'you' },
+    { date: 'Thu 9 Jul',  day: 'Thu', session: 'S14', type: 'you' },
+  ],
+  C: [
+    { date: 'Wed 8 Apr',  day: 'Wed', session: 'S1',  type: 'you' },
+    { date: 'Thu 9 Apr',  day: 'Thu', session: null,  type: 'skip', note: 'Skipped by agreement' },
+    { date: 'Wed 15 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Only one April week' },
+    { date: 'Thu 16 Apr', day: 'Thu', session: null,  type: 'skip', note: 'Only one April week' },
+    { date: 'Wed 22 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Confirmed skip' },
+    { date: 'Thu 23 Apr', day: 'Thu', session: null,  type: 'skip', note: 'No room available' },
+    { date: 'Wed 29 Apr', day: 'Wed', session: 'S2',  type: 'you' },
+    { date: 'Thu 30 Apr', day: 'Thu', session: 'S3',  type: 'you' },
+    { date: 'Wed 6 May',  day: 'Wed', session: 'S4',  type: 'you' },
+    { date: 'Thu 7 May',  day: 'Thu', session: 'S5',  type: 'sa',   note: 'Planned handover before travel' },
+    { date: 'Wed 13 May', day: 'Wed', session: null,  type: 'sa_opp', note: 'Away — travel Option C' },
+    { date: 'Thu 14 May', day: 'Thu', session: null,  type: 'skip', note: 'National holiday' },
+    { date: 'Wed 20 May', day: 'Wed', session: 'S6',  type: 'you' },
+    { date: 'Thu 21 May', day: 'Thu', session: 'S8',  type: 'you' },
+    { date: 'Wed 27 May', day: 'Wed', session: 'S9',  type: 'you' },
+    { date: 'Thu 28 May', day: 'Thu', session: 'S10', type: 'you' },
+    { date: '1–5 Jun',    day: '',    session: 'FW',  type: 'fw' },
+    { date: 'Wed 10 Jun', day: 'Wed', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Thu 11 Jun', day: 'Thu', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Wed 17 Jun', day: 'Wed', session: 'S11', type: 'you' },
+    { date: 'Thu 18 Jun', day: 'Thu', session: 'S12', type: 'you' },
+    { date: 'Thu 9 Jul',  day: 'Thu', session: 'S14', type: 'you' },
+  ],
+  X: [
+    { date: 'Wed 8 Apr',  day: 'Wed', session: 'S1',  type: 'you' },
+    { date: 'Thu 9 Apr',  day: 'Thu', session: null,  type: 'skip', note: 'Skipped by agreement' },
+    { date: 'Wed 15 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Only one April week' },
+    { date: 'Thu 16 Apr', day: 'Thu', session: null,  type: 'skip', note: 'Only one April week' },
+    { date: 'Wed 22 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Confirmed skip' },
+    { date: 'Thu 23 Apr', day: 'Thu', session: null,  type: 'skip', note: 'No room available' },
+    { date: 'Wed 29 Apr', day: 'Wed', session: 'S2',  type: 'you' },
+    { date: 'Thu 30 Apr', day: 'Thu', session: 'S3',  type: 'you' },
+    { date: 'Wed 6 May',  day: 'Wed', session: 'S4',  type: 'you' },
+    { date: 'Thu 7 May',  day: 'Thu', session: 'S5',  type: 'you' },
+    { date: 'Wed 13 May', day: 'Wed', session: 'S7',  type: 'you' },
+    { date: 'Thu 14 May', day: 'Thu', session: null,  type: 'skip', note: 'National holiday' },
+    { date: 'Wed 20 May', day: 'Wed', session: 'S6',  type: 'you' },
+    { date: 'Thu 21 May', day: 'Thu', session: 'S8',  type: 'you' },
+    { date: 'Wed 27 May', day: 'Wed', session: 'S9',  type: 'you' },
+    { date: 'Thu 28 May', day: 'Thu', session: 'S10', type: 'you' },
+    { date: '1–5 Jun',    day: '',    session: 'FW',  type: 'fw' },
+    { date: 'Wed 10 Jun', day: 'Wed', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Thu 11 Jun', day: 'Thu', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Wed 17 Jun', day: 'Wed', session: 'S11', type: 'you' },
+    { date: 'Thu 18 Jun', day: 'Thu', session: 'S12', type: 'you' },
+    { date: 'Thu 9 Jul',  day: 'Thu', session: 'S14', type: 'you' },
+  ],
+  W: [
+    { date: 'Wed 8 Apr',  day: 'Wed', session: 'S1',  type: 'you' },
+    { date: 'Thu 9 Apr',  day: 'Thu', session: null,  type: 'skip', note: 'Skipped by agreement' },
+    { date: 'Wed 15 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Only one April week' },
+    { date: 'Thu 16 Apr', day: 'Thu', session: null,  type: 'skip', note: 'Only one April week' },
+    { date: 'Wed 22 Apr', day: 'Wed', session: null,  type: 'skip', note: 'Confirmed skip' },
+    { date: 'Thu 23 Apr', day: 'Thu', session: null,  type: 'skip', note: 'No room available' },
+    { date: 'Wed 29 Apr', day: 'Wed', session: null,  type: 'sa_opp', note: 'Potential travel — SA covers' },
+    { date: 'Thu 30 Apr', day: 'Thu', session: null,  type: 'sa_opp', note: 'Potential travel — SA covers' },
+    { date: 'Wed 6 May',  day: 'Wed', session: 'S4',  type: 'you' },
+    { date: 'Thu 7 May',  day: 'Thu', session: 'S5',  type: 'you' },
+    { date: 'Wed 13 May', day: 'Wed', session: null,  type: 'sa_opp', note: 'Potential travel — SA covers' },
+    { date: 'Thu 14 May', day: 'Thu', session: null,  type: 'skip', note: 'National holiday' },
+    { date: 'Wed 20 May', day: 'Wed', session: 'S6',  type: 'you' },
+    { date: 'Thu 21 May', day: 'Thu', session: 'S8',  type: 'you' },
+    { date: 'Wed 27 May', day: 'Wed', session: 'S9',  type: 'you' },
+    { date: 'Thu 28 May', day: 'Thu', session: 'S10', type: 'you' },
+    { date: '1–5 Jun',    day: '',    session: 'FW',  type: 'fw' },
+    { date: 'Wed 10 Jun', day: 'Wed', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Thu 11 Jun', day: 'Thu', session: null,  type: 'slovakia', note: 'Slovakia fieldtrip (provisional)' },
+    { date: 'Wed 17 Jun', day: 'Wed', session: 'S11', type: 'you' },
+    { date: 'Thu 18 Jun', day: 'Thu', session: 'S12', type: 'you' },
+    { date: 'Thu 9 Jul',  day: 'Thu', session: 'S14', type: 'you' },
+  ],
+};
+
+const BLOCK_COLOURS = {
+  'Orientation':   '#f0fdf4',
+  'Foundations':   '#fffbeb',
+  'Methods':       '#eff6ff',
+  'Context':       '#fdf4ff',
+  'Preparation':   '#fff7ed',
+  'Fieldwork':     '#dbeafe',
+  'Post-Fieldwork':'#f0fdf4',
+};
+
+function showContent(planId) {
+  document.querySelectorAll('#cp-plan-tabs .tab').forEach((t,i) => {
+    t.classList.toggle('active', ['A','B','C','X','W'][i] === planId);
+  });
+  renderTimeline('tl-content', planId);
+
+  const rows = CP_PLANS[planId];
+  const tbody = document.getElementById('cp-body');
+  tbody.innerHTML = '';
+  const sessionMap = {};
+  SESSIONS.forEach(s => { sessionMap[s.id] = s; });
+
+  let lastBlock = null;
+  let sessionCounter = 0;
+
+  rows.forEach(row => {
+    const s = row.session ? sessionMap[row.session] : null;
+
+    // Block header
+    if (s && s.block !== lastBlock) {
+      lastBlock = s.block;
+      const tr = document.createElement('tr');
+      tr.className = 'cp-month';
+      tr.innerHTML = `<td colspan="8" style="background:${BLOCK_COLOURS[s.block]||'var(--bg)'}">${s.block}</td>`;
+      tbody.appendChild(tr);
+    }
+
+    const tr = document.createElement('tr');
+
+    // Row class
+    const cls = row.type === 'fw'       ? 'cp-fw'
+               : row.type === 'slovakia' ? 'cp-slovakia'
+               : row.type === 'sa_opp'  ? 'cp-sa-opp'
+               : row.type === 'sa'      ? 'cp-sa'
+               : row.type === 'skip'    ? 'cp-skip'
+               : 'cp-you';
+    tr.className = cls;
+
+    if (!s) {
+      // Non-teaching row
+      const statusLabel = row.type === 'sa_opp'   ? 'SA covers'
+                        : row.type === 'fw'        ? 'Fieldwork'
+                        : row.type === 'slovakia'  ? 'Slovakia fieldtrip'
+                        : 'Skipped';
+      tr.innerHTML = `
+        <td><strong>${row.date}</strong></td>
+        <td style="color:var(--empty);font-size:0.62rem">${row.day}</td>
+        <td style="color:var(--empty);font-size:0.62rem">—</td>
+        <td style="color:var(--empty);font-size:0.62rem;font-style:italic">${row.note||statusLabel}</td>
+        <td><span class="pill ${row.type==='sa_opp'?'p-sa-opp':row.type==='fw'?'p-fw':row.type==='slovakia'?'p-slovakia':'p-empty'}">${statusLabel}</span></td>
+        ${twCell(row.date)}
+        <td colspan="3" style="color:var(--empty);font-size:0.62rem;font-style:italic">${row.note||''}</td>
+      `;
+    } else {
+      if (!s.fieldwork) sessionCounter++;
+      const sNum = s.fieldwork ? '' : `S${sessionCounter}`;
+
+      // Build content list
+      const contentHTML = s.content.map(c => {
+        const saTag = c.sa ? `<span class="cp-sa-note"> ★ SA</span>` : '';
+        const minTag = c.min ? ` ${mins(c.min)}` : '';
+        return `<div class="cp-content-block">${c.text}${saTag}${minTag}</div>`;
+      }).join('');
+
+      const saHTML = s.sa
+        ? `<span class="cp-sa-note">${s.sa}</span>`
+        : `<span style="color:var(--empty);font-size:0.62rem">—</span>`;
+
+      const noteHTML = [
+        row.note ? `<span class="cp-note">${row.note}</span>` : '',
+        s.note   ? `<span class="cp-note">${s.note}</span>`   : '',
+        s.provisional ? `<span class="cp-note" style="color:#b45309">⚠ Provisional — may be fieldwork</span>` : '',
+      ].filter(Boolean).join('<br>');
+
+      const statusPill = row.type === 'sa_opp' ? '<span class="pill p-sa-opp">SA covers</span>'
+                       : row.type === 'sa'      ? '<span class="pill p-sa">SA handover</span>'
+                       : '<span class="pill p-you">You</span>';
+
+      tr.innerHTML = `
+        <td><strong>${row.date}</strong></td>
+        <td style="color:var(--empty);font-size:0.62rem">${row.day}</td>
+        <td style="font-size:0.65rem;font-weight:500">${sNum}</td>
+        <td style="font-weight:500">${s.topic}</td>
+        <td>${statusPill}</td>
+        ${twCell(row.date)}
+        <td>${contentHTML}</td>
+        <td>${saHTML}</td>
+        <td>${noteHTML}</td>
+      `;
+    }
+    tbody.appendChild(tr);
+  });
+}
+
+// ══ TIMELINE BAR ══
+const TL_START = new Date(2026, 3, 8);  // 8 Apr
+const TL_END   = new Date(2026, 6, 16); // 16 Jul
+const TL_TOTAL = (TL_END - TL_START) / 86400000;
+
+function tlPct(dt) {
+  return Math.max(0, Math.min(100, (dt - TL_START) / 86400000 / TL_TOTAL * 100));
+}
+function tlPctD(y,m,day) { return tlPct(new Date(y,m-1,day)); }
+
+// Fixed markers (plan-independent)
+const TL_FIXED = [
+  { label: 'Holiday',   start: new Date(2026,4,14), end: new Date(2026,4,14), color: '#fca5a5' },
+  { label: 'Exam',      start: new Date(2026,4,5),  end: new Date(2026,4,5),  color: '#c084fc' },
+  { label: 'Fieldwork', start: new Date(2026,5,1),  end: new Date(2026,5,5),  color: '#93c5fd' },
+  { label: 'Slovakia',  start: new Date(2026,5,8),  end: new Date(2026,5,12), color: '#c4b5fd' },
+];
+
+// Month ticks
+const TL_MONTHS = [
+  { label: 'Apr', dt: new Date(2026,3,1)  },
+  { label: 'May', dt: new Date(2026,4,1)  },
+  { label: 'Jun', dt: new Date(2026,5,1)  },
+  { label: 'Jul', dt: new Date(2026,6,1)  },
+];
+
+// Travel window definitions — with date labels for timeline
+const TL_TRIPS = [
+  { id:'A', label:'Option A', dateL:'10–19 Apr', dateS:'10–17 Apr',
+    short: { s: new Date(2026,3,10), e: new Date(2026,3,17) },
+    long:  { s: new Date(2026,3,10), e: new Date(2026,3,19) }, color:'#f97316' },
+  { id:'B', label:'Option B', dateL:'24 Apr–3 May', dateS:'24 Apr–1 May',
+    short: { s: new Date(2026,3,24), e: new Date(2026,4,1)  },
+    long:  { s: new Date(2026,3,24), e: new Date(2026,4,3)  }, color:'#eab308' },
+  { id:'C', label:'Option C', dateL:'8–17 May', dateS:'8–15 May',
+    short: { s: new Date(2026,4,8),  e: new Date(2026,4,15) },
+    long:  { s: new Date(2026,4,8),  e: new Date(2026,4,17) }, color:'#22c55e' },
+];
+
+function renderTimeline(containerId, activePlanId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  // Determine which trips are highlighted
+  const planBase = activePlanId ? activePlanId.replace(/-short|-long/,'') : null;
+
+  let html = `<div class="tl-title">Semester timeline · 8 Apr – 16 Jul 2026</div>`;
+  html += `<div class="tl-outer">`;
+
+  // Month label row
+  html += `<div style="position:relative;height:18px;margin-left:100px;">`;
+  TL_MONTHS.forEach(m => {
+    const pct = tlPct(m.dt);
+    if (pct < 0 || pct > 100) return;
+    html += `<span style="position:absolute;left:${pct}%;font-size:0.6rem;color:var(--empty);transform:translateX(-50%);white-space:nowrap;">${m.label}</span>`;
+  });
+  // Add end label
+  html += `<span style="position:absolute;left:100%;font-size:0.6rem;color:var(--empty);transform:translateX(-50%);white-space:nowrap;">Jul</span>`;
+  html += `</div>`;
+
+  // Base track with fixed markers
+  html += `<div class="tl-row">`;
+  html += `<div class="tl-row-label" style="font-size:0.58rem;">Fixed</div>`;
+  html += `<div class="tl-axis" style="position:relative;height:14px;">`;
+  // background track
+  html += `<div style="position:absolute;top:2px;left:0;right:0;height:10px;background:#e8e3d8;border-radius:3px;"></div>`;
+  // fixed markers
+  TL_FIXED.forEach(f => {
+    const l = tlPct(f.start);
+    const r = tlPct(new Date(f.end.getTime() + 86400000)); // end is inclusive
+    const w = Math.max(0.4, r - l);
+    html += `<div style="position:absolute;top:2px;left:${l}%;width:${w}%;height:10px;background:${f.color};border-radius:2px;opacity:0.85;" title="${f.label}"></div>`;
+  });
+  // month tick lines
+  TL_MONTHS.forEach(m => {
+    const p = tlPct(m.dt);
+    if (p > 0 && p < 100) html += `<div style="position:absolute;top:0;left:${p}%;width:1px;height:14px;background:var(--rule);opacity:0.5;"></div>`;
+  });
+  html += `</div></div>`;
+
+  // Travel rows — one per trip, long then short
+  TL_TRIPS.forEach(trip => {
+    const isActive = planBase === trip.id || planBase === 'W';
+    const alpha = isActive ? '1' : '0.25';
+
+    // Long bar row
+    html += `<div class="tl-row">`;
+    html += `<div class="tl-row-label">${trip.label} long<br><span style="font-size:0.52rem;opacity:0.7;">${trip.dateL}</span></div>`;
+    html += `<div class="tl-axis" style="position:relative;height:18px;">`;
+    html += `<div style="position:absolute;top:4px;left:0;right:0;height:10px;background:#e8e3d8;border-radius:3px;opacity:0.3;"></div>`;
+    const ll = tlPct(trip.long.s), lr = tlPct(new Date(trip.long.e.getTime()+86400000));
+    html += `<div style="position:absolute;top:4px;left:${ll}%;width:${lr-ll}%;height:10px;background:${trip.color};border-radius:2px;opacity:${alpha};"></div>`;
+    TL_MONTHS.forEach(m => { const p=tlPct(m.dt); if(p>0&&p<100) html+=`<div style="position:absolute;top:0;left:${p}%;width:1px;height:18px;background:var(--rule);opacity:0.3;"></div>`; });
+    html += `</div></div>`;
+
+    // Short bar row
+    html += `<div class="tl-row">`;
+    html += `<div class="tl-row-label" style="opacity:0.7;">${trip.label} short<br><span style="font-size:0.52rem;">${trip.dateS}</span></div>`;
+    html += `<div class="tl-axis" style="position:relative;height:9px;">`;
+    html += `<div style="position:absolute;top:0;left:0;right:0;height:7px;background:#e8e3d8;border-radius:3px;opacity:0.3;"></div>`;
+    const sl = tlPct(trip.short.s), sr = tlPct(new Date(trip.short.e.getTime()+86400000));
+    html += `<div style="position:absolute;top:0;left:${sl}%;width:${sr-sl}%;height:7px;background:${trip.color};border-radius:2px;opacity:${isActive ? '0.65' : '0.15'};"></div>`;
+    TL_MONTHS.forEach(m => { const p=tlPct(m.dt); if(p>0&&p<100) html+=`<div style="position:absolute;top:0;left:${p}%;width:1px;height:9px;background:var(--rule);opacity:0.3;"></div>`; });
+    html += `</div></div>`;
+  });
+
+  html += `</div>`; // tl-outer
+
+  // Legend
+  html += `<div class="tl-legend-row">`;
+  TL_TRIPS.forEach(t => {
+    html += `<div class="tl-legend-item"><div class="tl-legend-dot" style="background:${t.color};"></div>${t.label} <span style="color:var(--empty);font-size:0.58rem;">(long: ${t.dateL} · short: ${t.dateS})</span></div>`;
+  });
+  html += `<div class="tl-legend-item"><div class="tl-legend-dot" style="background:#fca5a5;"></div>National holiday</div>`;
+  html += `<div class="tl-legend-item"><div class="tl-legend-dot" style="background:#c084fc;"></div>German exam (5 May)</div>`;
+  html += `<div class="tl-legend-item"><div class="tl-legend-dot" style="background:#93c5fd;"></div>Fieldwork week</div>`;
+  html += `<div class="tl-legend-item"><div class="tl-legend-dot" style="background:#c4b5fd;"></div>Slovakia fieldtrip (8–12 Jun)</div>`;
+  html += `<div class="tl-legend-item" style="color:var(--empty);font-style:italic;">Tall bar = long trip · Short bar = short trip · Active plan highlighted</div>`;
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+// ══ TRAVEL WINDOW CALENDAR ══
+const TWC_TRIPS = [
+  { id:'A', label:'Option A', color:'#f97316', colorLight:'#fed7aa',
+    short: { s: new Date(2026,3,10), e: new Date(2026,3,17) },
+    long:  { s: new Date(2026,3,10), e: new Date(2026,3,19) } },
+  { id:'B', label:'Option B', color:'#eab308', colorLight:'#fef08a',
+    short: { s: new Date(2026,3,24), e: new Date(2026,4,1)  },
+    long:  { s: new Date(2026,3,24), e: new Date(2026,4,3)  } },
+  { id:'C', label:'Option C', color:'#22c55e', colorLight:'#bbf7d0',
+    short: { s: new Date(2026,4,8),  e: new Date(2026,4,15) },
+    long:  { s: new Date(2026,4,8),  e: new Date(2026,4,17) } },
+];
+
+// Fixed date markers
+const TWC_FIXED = {
+  '2026-5-14':  { tag: 'twc-tag-holiday', label: 'National holiday' },
+  '2026-5-5':   { tag: 'twc-tag-exam',    label: 'German exam' },
+  '2026-6-8':   { tag: 'twc-tag-slovakia', label: 'Slovakia trip' },
+  '2026-6-9':   { tag: 'twc-tag-slovakia', label: 'Slovakia trip' },
+  '2026-6-10':  { tag: 'twc-tag-slovakia', label: 'Slovakia trip' },
+  '2026-6-11':  { tag: 'twc-tag-slovakia', label: 'Slovakia trip' },
+  '2026-6-12':  { tag: 'twc-tag-slovakia', label: 'Slovakia trip' },
+  '2026-6-1':   { tag: 'twc-tag-fw',      label: 'Fieldwork' },
+  '2026-6-2':   { tag: 'twc-tag-fw',      label: 'Fieldwork' },
+  '2026-6-3':   { tag: 'twc-tag-fw',      label: 'Fieldwork' },
+  '2026-6-4':   { tag: 'twc-tag-fw',      label: 'Fieldwork' },
+  '2026-6-5':   { tag: 'twc-tag-fw',      label: 'Fieldwork' },
+  '2026-4-8':   { tag: 'twc-tag-teach',   label: 'Session 1 — Induction' },
+  '2026-4-22':  { tag: 'twc-tag-skip',    label: 'Skip' },
+  '2026-4-23':  { tag: 'twc-tag-skip',    label: 'No room' },
+  '2026-4-29':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-4-30':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-6':   { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-7':   { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-13':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-20':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-21':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-27':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+  '2026-5-28':  { tag: 'twc-tag-teach',   label: 'Teaching' },
+};
+
+let twcRendered = false;
+
+function renderTravelCalendar() {
+  if (twcRendered) return;
+  twcRendered = true;
+
+  const container = document.getElementById('tw-calendar');
+  const MNL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MNS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DNF = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const DNS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  let html = `<div class="twc-wrap">`;
+
+  // Legend
+  html += `<div class="twc-legend">`;
+  TWC_TRIPS.forEach(t => {
+    html += `<div class="twc-legend-item">
+      <div style="display:flex;gap:3px;">
+        <div class="twc-legend-swatch" style="background:${t.color};"></div>
+        <div class="twc-legend-swatch" style="background:${t.colorLight};border:1.5px solid ${t.color};"></div>
+      </div>
+      <div><span style="font-weight:500">${t.label}</span> <span style="color:var(--empty);font-size:0.62rem;">solid = long &amp; short · light = short only</span></div>
+    </div>`;
+  });
+  html += `<div class="twc-legend-item"><div class="twc-legend-swatch" style="background:#e8e3d8;opacity:0.4;"></div><span style="color:var(--empty)">No window</span></div>`;
+  html += `</div>`;
+
+  // Calendar rows
+  let cur = new Date(2026, 3, 8); // 8 Apr
+  const end = new Date(2026, 6, 16); // 16 Jul
+  let lastMonth = -1;
+
+  while (cur <= end) {
+    const m = cur.getMonth();
+    const dNum = cur.getDate();
+    const dow = cur.getDay(); // 0=Sun
+    const isWeekend = dow === 0 || dow === 6;
+    const dateKey = `${cur.getFullYear()}-${m+1}-${dNum}`;
+
+    // Month heading
+    if (m !== lastMonth) {
+      lastMonth = m;
+      html += `<div class="twc-month-label">${MNL[m]} ${cur.getFullYear()}</div>`;
+    }
+
+    html += `<div class="twc-row${isWeekend?' twc-weekend':''}">`;
+
+    // Date column
+    html += `<div class="twc-date">
+      <div class="twc-daynum${isWeekend?' twc-weekend-num':''}">${dNum}</div>
+      <div class="twc-dayname">${DNS[dow]}</div>
+    </div>`;
+
+    // Single colour block — determined by which window(s) this date falls in
+    // Priority: long window > short window > none; show all applicable options as stacked swatches
+    html += `<div style="display:flex;align-items:center;gap:4px;flex:1;padding:6px 0;">`;
+    let anyWindow = false;
+    TWC_TRIPS.forEach(t => {
+      const inLong  = cur >= t.long.s  && cur <= t.long.e;
+      const inShort = cur >= t.short.s && cur <= t.short.e;
+      if (inLong || inShort) {
+        anyWindow = true;
+        const bg = inLong ? t.color : t.colorLight;
+        const border = inShort && !inLong ? `border:1.5px solid ${t.color};` : '';
+        const tooltip = inLong && inShort ? `${t.label}: short + long window`
+                      : inLong            ? `${t.label}: long window only`
+                      :                     `${t.label}: short window only`;
+        html += `<div style="height:28px;flex:1;border-radius:3px;background:${bg};${border}" title="${tooltip}"></div>`;
+      } else {
+        html += `<div style="height:28px;flex:1;border-radius:3px;background:#e8e3d8;opacity:0.25;" title="No ${t.label} window"></div>`;
+      }
+    });
+    html += `</div>`;
+
+    // Markers column
+    html += `<div class="twc-markers">`;
+    const fixed = TWC_FIXED[dateKey];
+    if (fixed) html += `<span class="twc-tag ${fixed.tag}">${fixed.label}</span>`;
+    html += `</div>`; // twc-markers
+
+    html += `</div>`; // twc-row
+    cur = addDays(cur, 1);
+  }
+
+  html += `</div>`; // twc-wrap
+  container.innerHTML = html;
+}
+
+// ══ TRAVEL CALENDAR TAB ══
+const TC_WINDOWS = {
+  'a-short': { s: new Date(2026,3,10), e: new Date(2026,3,17) },
+  'a-long':  { s: new Date(2026,3,10), e: new Date(2026,3,19) },
+  'b-short': { s: new Date(2026,3,24), e: new Date(2026,4,1)  },
+  'b-long':  { s: new Date(2026,3,24), e: new Date(2026,4,3)  },
+  'c-short': { s: new Date(2026,4,8),  e: new Date(2026,4,15) },
+  'c-long':  { s: new Date(2026,4,8),  e: new Date(2026,4,17) },
+};
+const TC_CONSTRAINTS = {
+  '2026-4-21': 'Citizenship appointment (Ausländerbehörde)',
+  '2026-5-5':  'German exam',
+  '2026-5-6':  'Citizenship exam',
+  '2026-5-14': 'National holiday',
+};
+const TC_HOLIDAY = '2026-5-14';
+const TC_OPTS = ['a-short','a-long','b-short','b-long','c-short','c-long'];
+const TC_MONTHS_LONG = ['January','February','March','April','May','June','July'];
+const TC_DAYS_SHORT  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+let tcRendered = false;
+function renderTravelCal() {
+  if (tcRendered) return;
+  tcRendered = true;
+  const tbody = document.getElementById('tc-cal-body');
+  let cur = new Date(2026, 3, 8);
+  const end = new Date(2026, 4, 31);
+  let lastMonth = -1;
+
+  while (cur <= end) {
+    const m = cur.getMonth();
+    const dNum = cur.getDate();
+    const dow = cur.getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const ck = `${cur.getFullYear()}-${m+1}-${dNum}`;
+    const constraint = TC_CONSTRAINTS[ck];
+
+    if (m !== lastMonth) {
+      lastMonth = m;
+      const sep = document.createElement('tr');
+      sep.className = 'tc-month-sep';
+      sep.innerHTML = `<td colspan="8">${TC_MONTHS_LONG[m]} 2026</td>`;
+      tbody.appendChild(sep);
+    }
+
+    const tr = document.createElement('tr');
+    if (ck === TC_HOLIDAY)  tr.className = isWeekend ? 'tc-weekend tc-holiday-row'    : 'tc-holiday-row';
+    else if (constraint)    tr.className = isWeekend ? 'tc-weekend tc-constraint-row' : 'tc-constraint-row';
+    else if (isWeekend)     tr.className = 'tc-weekend';
+
+    const dateTd = `<td class="tc-col-date">
+      <span class="tc-date-num">${dNum}</span>
+      <span class="tc-date-day">${TC_DAYS_SHORT[dow]}</span>
+    </td>`;
+
+    const optCells = TC_OPTS.map(key => {
+      const away = cur >= TC_WINDOWS[key].s && cur <= TC_WINDOWS[key].e;
+      return `<td class="${away ? 'tc-away-'+key : ''}">${away ? '✈' : ''}</td>`;
+    }).join('');
+
+    const labelTd = `<td class="tc-constraint-label">${constraint || ''}</td>`;
+
+    tr.innerHTML = dateTd + optCells + labelTd;
+    tbody.appendChild(tr);
+    cur = addDays(cur, 1);
+  }
+}
+
+// Initialise views
+showPlan('A');
+showContent('A');
+showWorkshop('A-short');
+</script>
+</body>
+</html>
